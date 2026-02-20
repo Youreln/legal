@@ -209,7 +209,8 @@ function nextQuestion() {
 }
 
 function showResult() {
-    $('.game-container').html('<h2 class="game-title">游戏结束</h2><div class="game-description"><p>你的得分：' + score + '/' + questions.length + '</p><p>' + getResultMessage() + '</p></div><button class="game-next" onclick="restartGame()">重新开始</button>');
+    var resultMessage = getResultMessage();
+    $('.game-container').html('<h2 class="game-title">游戏结束</h2><div class="game-description"><p>你的得分：' + score + '/' + questions.length + '</p><p>' + resultMessage + '</p></div><div class="game-share"><h3>分享你的成绩</h3><div class="share-buttons"><button class="share-btn" onclick="shareGameScore()"><i class="fab fa-weixin"></i><span>微信</span></button><button class="share-btn" onclick="shareGameScore()"><i class="fab fa-weibo"></i><span>微博</span></button><button class="share-btn" onclick="shareGameScore()"><i class="fab fa-qq"></i><span>QQ</span></button></div></div><button class="game-next" onclick="restartGame()">重新开始</button>');
 }
 
 function getResultMessage() {
@@ -318,3 +319,35 @@ $(document).on('click', 'a[href$=".html"]', function(e) {
         window.location.href = href;
     });
 });
+
+// 分享游戏分数
+function shareGameScore() {
+    var shareText = '我在大田一中「带法回家」法律知识小测验中获得了 ' + score + '/' + questions.length + ' 分！' + getResultMessage() + ' 快来挑战我吧！';
+    var shareUrl = window.location.href;
+    
+    if (navigator.share) {
+        // 使用Web Share API
+        navigator.share({
+            title: '法律知识小测验成绩',
+            text: shareText,
+            url: shareUrl
+        }).catch(function(error) {
+            console.error('分享失败:', error);
+            fallbackShare(shareText, shareUrl);
+        });
+    } else {
+        //  fallback分享方式
+        fallbackShare(shareText, shareUrl);
+    }
+}
+
+// 备用分享方式
+function fallbackShare(text, url) {
+    // 复制分享内容到剪贴板
+    var shareContent = text + ' ' + url;
+    navigator.clipboard.writeText(shareContent).then(function() {
+        alert('分享内容已复制到剪贴板，请粘贴分享给好友！');
+    }).catch(function() {
+        alert('请手动分享你的成绩：\n' + text + '\n' + url);
+    });
+}

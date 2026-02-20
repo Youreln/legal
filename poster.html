@@ -30,23 +30,23 @@
         </div>
     </nav>
 
-    <!-- 海报生成页面 -->
+    <!-- 小纸条生成页面 -->
     <section class="poster-generator">
         <div class="container">
-            <h1 class="section-title">法治宣传海报生成</h1>
+            <h1 class="section-title">法治宣传小纸条生成</h1>
             
             <div class="poster-form">
-                <h2>一键生成法治宣传海报</h2>
-                <p>填写以下信息，生成属于你的法治宣传海报！</p>
+                <h2>一键生成法治宣传小纸条</h2>
+                <p>填写以下信息，生成属于你的法治宣传小纸条！</p>
                 
                 <div class="form-group">
-                    <label for="poster-title">海报标题</label>
-                    <input type="text" id="poster-title" placeholder="请输入海报标题" value="法治为我护航">
+                    <label for="poster-title">纸条标题</label>
+                    <input type="text" id="poster-title" placeholder="请输入纸条标题" value="法治为我护航">
                 </div>
                 
                 <div class="form-group">
-                    <label for="poster-content">海报内容</label>
-                    <textarea id="poster-content" placeholder="请输入海报内容" rows="4">做自己的守护者，学法守法用法，共建法治社会！</textarea>
+                    <label for="poster-content">纸条内容</label>
+                    <textarea id="poster-content" placeholder="请输入纸条内容" rows="4">做自己的守护者，学法守法用法，共建法治社会！</textarea>
                 </div>
                 
                 <div class="form-group">
@@ -55,7 +55,7 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="poster-theme">海报主题</label>
+                    <label for="poster-theme">纸条主题</label>
                     <select id="poster-theme">
                         <option value="blue-green">蓝绿渐变</option>
                         <option value="red-yellow">红黄渐变</option>
@@ -65,26 +65,26 @@
                 </div>
                 
                 <div class="poster-preview">
-                    <div class="poster-template">
-                        <h2 id="preview-title">法治为我护航</h2>
-                        <p id="preview-content">做自己的守护者，学法守法用法，共建法治社会！</p>
-                        <div class="poster-footer" id="preview-author">—— 大田一中 「带法回家」活动</div>
+                    <div class="poster-template" style="max-width: 300px; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); transform: rotate(-2deg);">
+                        <h2 id="preview-title" style="font-size: 20px; margin-bottom: 15px;">法治为我护航</h2>
+                        <p id="preview-content" style="font-size: 14px; margin-bottom: 20px; line-height: 1.5;">做自己的守护者，学法守法用法，共建法治社会！</p>
+                        <div class="poster-footer" id="preview-author" style="font-size: 12px; opacity: 0.8;">—— 大田一中 「带法回家」活动</div>
                     </div>
                 </div>
                 
-                <button class="generate-btn">生成海报</button>
-                <a href="#" class="download-btn">下载海报</a>
+                <button class="generate-btn">生成小纸条</button>
+                <a href="#" class="download-btn" id="download-btn">下载小纸条</a>
             </div>
             
             <div class="poster-tips">
-                <h3>海报使用说明</h3>
+                <h3>小纸条使用说明</h3>
                 <ul>
-                    <li>生成的海报可用于班级宣传、社区普法等活动</li>
-                    <li>建议下载后打印成A4或A3尺寸</li>
-                    <li>可在海报上添加学校标志或其他元素</li>
-                    <li>分享海报到社交媒体，扩大法治宣传影响力</li>
+                    <li>生成的小纸条可用于班级宣传、社区普法等活动</li>
+                    <li>建议下载后打印或分享到社交媒体</li>
+                    <li>可将小纸条贴在书桌、冰箱等显眼位置提醒自己</li>
+                    <li>分享小纸条到朋友圈，邀请更多同学参与</li>
                 </ul>
-                <h3>海报主题推荐</h3>
+                <h3>小纸条主题推荐</h3>
                 <ul>
                     <li>未成年人保护</li>
                     <li>防范电信诈骗</li>
@@ -140,8 +140,9 @@
         </div>
     </footer>
 
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <script>
-        // 海报主题颜色
+        // 小纸条主题颜色
         var themes = {
             'blue-green': 'linear-gradient(135deg, #1a73e8 0%, #34a853 100%)',
             'red-yellow': 'linear-gradient(135deg, #ea4335 0%, #fbbc05 100%)',
@@ -149,7 +150,7 @@
             'green-blue': 'linear-gradient(135deg, #34a853 0%, #1a73e8 100%)'
         };
         
-        // 实时预览海报
+        // 实时预览小纸条
         $(document).ready(function() {
             // 实时更新预览
             $('#poster-title').keyup(function() {
@@ -173,17 +174,32 @@
                 $('.poster-template').css('background', gradient);
             });
             
-            // 生成海报
+            // 生成小纸条
             $('.generate-btn').click(function() {
-                alert('海报生成成功！点击下载按钮保存海报。');
-                // 这里可以添加实际的海报生成逻辑
+                alert('小纸条生成成功！点击下载按钮保存小纸条。');
             });
             
-            // 下载海报
-            $('.download-btn').click(function(e) {
+            // 下载小纸条
+            $('#download-btn').click(function(e) {
                 e.preventDefault();
-                alert('海报下载功能开发中，敬请期待！\n\n您可以截图保存当前预览的海报。');
-                // 这里可以添加实际的海报下载逻辑
+                
+                // 使用html2canvas将小纸条转换为图片
+                html2canvas($('.poster-template')[0], {
+                    scale: 2,
+                    useCORS: true,
+                    logging: false,
+                    backgroundColor: null
+                }).then(function(canvas) {
+                    // 创建下载链接
+                    var link = document.createElement('a');
+                    link.download = '法治小纸条_' + new Date().getTime() + '.png';
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+                    alert('小纸条下载成功！');
+                }).catch(function(error) {
+                    console.error('下载小纸条失败:', error);
+                    alert('下载小纸条失败，请稍后重试或截图保存。');
+                });
             });
         });
     </script>

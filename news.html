@@ -39,8 +39,22 @@
                 <h2>法治春风润心田，青春普法正当时</h2>
                 <p>大田一中「带法回家」第26年活动报道</p>
                 
-                <!-- 嵌入美篇报道 -->
-                <iframe class="meipian-embed" src="https://www.meipian.cn/5jzk47v8" frameborder="0" allowfullscreen></iframe>
+                <!-- 活动报道链接 -->
+                <div class="news-links">
+                    <h3>活动报道链接</h3>
+                    <p>请点击以下链接查看详细活动报道：</p>
+                    <a href="https://www.meipian.cn/5jzk47v8" target="_blank" class="news-link-btn">
+                        <i class="fas fa-newspaper"></i>
+                        <span>美篇报道：法治春风润心田，青春普法正当时</span>
+                    </a>
+                    <a href="https://mp.weixin.qq.com/s/NqkUHtHldwXc2DpSNu46PQ" target="_blank" class="news-link-btn">
+                        <i class="fab fa-weixin"></i>
+                        <span>微信公众号报道：法治为我护航 做自己的守护者</span>
+                    </a>
+                    <div class="wechat-tip">
+                        <p><i class="fas fa-info-circle"></i> 在微信内打开时，点击右上角 <strong>···</strong> 选择 <strong>在浏览器中打开</strong> 可获得更好的浏览体验</p>
+                    </div>
+                </div>
                 
                 <div class="news-share">
                     <h3>分享活动报道</h3>
@@ -77,35 +91,7 @@
                 </ul>
             </div>
             
-            <div class="news-gallery">
-                <h3>活动风采</h3>
-                <div class="gallery-grid">
-                    <div class="gallery-item">
-                        <div class="gallery-placeholder">
-                            <i class="fas fa-image"></i>
-                            <p>活动照片1</p>
-                        </div>
-                    </div>
-                    <div class="gallery-item">
-                        <div class="gallery-placeholder">
-                            <i class="fas fa-image"></i>
-                            <p>活动照片2</p>
-                        </div>
-                    </div>
-                    <div class="gallery-item">
-                        <div class="gallery-placeholder">
-                            <i class="fas fa-image"></i>
-                            <p>活动照片3</p>
-                        </div>
-                    </div>
-                    <div class="gallery-item">
-                        <div class="gallery-placeholder">
-                            <i class="fas fa-image"></i>
-                            <p>活动照片4</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
         </div>
     </section>
 
@@ -189,51 +175,6 @@
             top: 0;
         }
         
-        .news-gallery {
-            margin-top: 50px;
-        }
-        
-        .news-gallery h3 {
-            margin-bottom: 30px;
-            color: #1a73e8;
-            text-align: center;
-        }
-        
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-        
-        .gallery-item {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-        
-        .gallery-placeholder {
-            height: 200px;
-            background: #f8f9fa;
-            border-radius: 8px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            border: 2px dashed #e0e0e0;
-        }
-        
-        .gallery-placeholder i {
-            font-size: 48px;
-            color: #1a73e8;
-            margin-bottom: 10px;
-        }
-        
-        .gallery-placeholder p {
-            color: #666;
-        }
-        
         .news-share .share-btn {
             width: auto;
             padding: 10px 20px;
@@ -243,6 +184,57 @@
         
         .news-share .share-btn span {
             margin-left: 5px;
+        }
+        
+        /* 新闻链接样式 */
+        .news-links {
+            margin: 30px 0;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid #1a73e8;
+        }
+        
+        .news-links h3 {
+            margin-bottom: 20px;
+            color: #1a73e8;
+        }
+        
+        .news-link-btn {
+            display: block;
+            margin: 15px 0;
+            padding: 15px 20px;
+            background: white;
+            color: #333;
+            text-decoration: none;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+        
+        .news-link-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+            color: #1a73e8;
+        }
+        
+        .news-link-btn i {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+        
+        .wechat-tip {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e3f2fd;
+            border-radius: 6px;
+            font-size: 14px;
+            color: #1976d2;
+        }
+        
+        .wechat-tip i {
+            margin-right: 8px;
         }
     </style>
 </body>

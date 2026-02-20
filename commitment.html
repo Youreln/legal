@@ -52,13 +52,16 @@
                     
                     <div class="form-group">
                         <label for="grade">年级</label>
-                        <select id="grade" required>
-                            <option value="">请选择年级</option>
-                            <option value="高一">高一</option>
-                            <option value="高二">高二</option>
-                            <option value="高三">高三</option>
-                            <option value="其他">其他</option>
-                        </select>
+                        <div class="grade-selector">
+                            <select id="grade" required>
+                                <option value="">请选择年级</option>
+                                <option value="高一">高一</option>
+                                <option value="高二">高二</option>
+                                <option value="高三">高三</option>
+                                <option value="其他">其他</option>
+                            </select>
+                            <input type="text" id="grade-other" placeholder="请输入其他年级" style="display: none; margin-top: 10px;">
+                        </div>
                     </div>
                     
                     <div class="form-group">
@@ -158,11 +161,38 @@
     </footer>
 
     <script>
+        // GitHub Token
+        const GITHUB_TOKEN = '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';
+        const REPO_OWNER = 'trae-ide';
+        const REPO_NAME = 'legal-education-h5';
+        
         // 实时预览承诺书内容
         $(document).ready(function() {
             // 填充当前日期
             var currentDate = new Date().toLocaleDateString();
             $('#sign-date').text(currentDate);
+            
+            // 加载已签署人数
+            loadSignedCount();
+            
+            // 年级选择为"其他"时显示输入框
+            $('#grade').change(function() {
+                var grade = $(this).val();
+                if (grade === '其他') {
+                    $('#grade-other').show();
+                } else {
+                    $('#grade-other').hide();
+                    $('#preview-grade').text(grade || '__________');
+                    updateGradeClass();
+                }
+            });
+            
+            // 其他年级输入框变化时更新预览
+            $('#grade-other').keyup(function() {
+                var grade = $(this).val() || '其他';
+                $('#preview-grade').text(grade);
+                updateGradeClass();
+            });
             
             // 实时更新预览
             $('#name').keyup(function() {
@@ -177,24 +207,137 @@
                 $('#sign-school').text(school);
             });
             
-            $('#grade').change(function() {
-                var grade = $(this).val() || '__________';
-                $('#preview-grade').text(grade);
-                updateGradeClass();
-            });
-            
             $('#class').keyup(function() {
                 updateGradeClass();
             });
             
             function updateGradeClass() {
-                var grade = $('#grade').val() || '';
+                var grade = $('#grade').val();
+                if (grade === '其他') {
+                    grade = $('#grade-other').val() || '其他';
+                }
                 var className = $('#class').val() || '';
                 var gradeClass = (grade + '年级' + className).replace('年级', '') || '__________';
                 $('#preview-class').text(className || '__________');
                 $('#sign-grade-class').text(gradeClass);
             }
+            
+            // 签署承诺书
+            $('.submit-btn').click(function() {
+                var name = $('#name').val();
+                var school = $('#school').val();
+                var grade = $('#grade').val();
+                if (grade === '其他') {
+                    grade = $('#grade-other').val() || '其他';
+                }
+                var className = $('#class').val();
+                var contact = $('#contact').val();
+                
+                if (!name || !school || !grade || !className) {
+                    alert('请填写完整信息');
+                    return;
+                }
+                
+                // 生成承诺书
+                var commitmentText = `
+                    法治承诺书
+                    
+                    我是${school}${grade}年级${className}班的${name}，在此郑重承诺：
+                    
+                    1. 自觉遵守法律法规，做守法好公民；
+                    2. 积极学习法律知识，增强法治意识；
+                    3. 尊重他人权利，不参与校园欺凌；
+                    4. 防范电信诈骗，保护个人信息；
+                    5. 主动宣传法律知识，带动家人朋友学法守法；
+                    6. 遇到法律问题，通过合法途径解决。
+                    
+                    承诺人：${name}
+                    学校：${school}
+                    班级：${grade}年级${className}班
+                    日期：${currentDate}
+                `;
+                
+                // 创建GitHub Issue
+                createGitHubIssue(name, school, grade, className, contact);
+                
+                // 显示承诺书
+                alert('承诺书签署成功！\n\n' + commitmentText);
+                
+                // 重置表单
+                $('.commitment-form')[0].reset();
+                $('#grade-other').hide();
+                $('#preview-name').text('__________');
+                $('#preview-school').text('__________');
+                $('#preview-grade').text('__________');
+                $('#preview-class').text('__________');
+                $('#sign-name').text('__________');
+                $('#sign-school').text('__________');
+                $('#sign-grade-class').text('__________');
+            });
         });
+        
+        // 加载已签署人数
+        function loadSignedCount() {
+            $.ajax({
+                url: `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/issues`,
+                headers: {
+                    'Authorization': `token ${GITHUB_TOKEN}`,
+                    'Accept': 'application/vnd.github.v3+json'
+                },
+                success: function(data) {
+                    var count = data.length;
+                    if ($('#signed-count').length === 0) {
+                        $('.commitment-form h2').after('<p class="signed-count" id="signed-count">已有 <strong>' + count + '</strong> 人签署法治承诺书</p>');
+                    } else {
+                        $('#signed-count').html('已有 <strong>' + count + '</strong> 人签署法治承诺书');
+                    }
+                },
+                error: function() {
+                    console.error('加载已签署人数失败');
+                }
+            });
+        }
+        
+        // 创建GitHub Issue
+        function createGitHubIssue(name, school, grade, className, contact) {
+            var issueTitle = `签署承诺书 - ${name} - ${school} ${grade}年级${className}班`;
+            var issueBody = `
+                姓名：${name}
+                学校：${school}
+                年级：${grade}
+                班级：${className}
+                联系方式：${contact || '未提供'}
+                签署日期：${new Date().toLocaleDateString()}
+                
+                承诺内容：
+                1. 自觉遵守法律法规，做守法好公民；
+                2. 积极学习法律知识，增强法治意识；
+                3. 尊重他人权利，不参与校园欺凌；
+                4. 防范电信诈骗，保护个人信息；
+                5. 主动宣传法律知识，带动家人朋友学法守法；
+                6. 遇到法律问题，通过合法途径解决。
+            `;
+            
+            $.ajax({
+                url: `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/issues`,
+                method: 'POST',
+                headers: {
+                    'Authorization': `token ${GITHUB_TOKEN}`,
+                    'Accept': 'application/vnd.github.v3+json'
+                },
+                data: JSON.stringify({
+                    title: issueTitle,
+                    body: issueBody
+                }),
+                success: function() {
+                    // 更新已签署人数
+                    loadSignedCount();
+                },
+                error: function() {
+                    console.error('创建Issue失败');
+                }
+            });
+        }
     </script>
 </body>
 </html>
