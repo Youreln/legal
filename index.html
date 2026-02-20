@@ -149,24 +149,9 @@
     <script>
         // 加载已签署人数到主页
         function loadSignedCountHome() {
-            var GITHUB_TOKEN = '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';
-            var REPO_OWNER = 'trae-ide';
-            var REPO_NAME = 'legal-education-h5';
-            
-            $.ajax({
-                url: `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/issues`,
-                headers: {
-                    'Authorization': `token ${GITHUB_TOKEN}`,
-                    'Accept': 'application/vnd.github.v3+json'
-                },
-                success: function(data) {
-                    var count = data.length;
-                    $('#signed-count-home').html('已有 <strong>' + count + '</strong> 人签署');
-                },
-                error: function() {
-                    console.error('加载已签署人数失败');
-                }
-            });
+            // 使用本地存储统计签署人数
+            var count = localStorage.getItem('signedCount') || 0;
+            $('#signed-count-home').html('已有 <strong>' + count + '</strong> 人签署');
         }
         
         // 页面加载时执行

@@ -257,8 +257,8 @@
                     日期：${currentDate}
                 `;
                 
-                // 创建GitHub Issue
-                createGitHubIssue(name, school, grade, className, contact);
+                // 保存签署信息到本地存储
+                saveCommitment(name, school, grade, className, contact);
                 
                 // 显示承诺书
                 alert('承诺书签署成功！\n\n' + commitmentText);
@@ -278,68 +278,40 @@
         
         // 加载已签署人数
         function loadSignedCount() {
-            // 先显示默认值，避免用户等待
+            // 使用本地存储统计签署人数
+            var count = localStorage.getItem('signedCount') || 0;
             if ($('#signed-count').length === 0) {
-                $('.commitment-form h2').after('<p class="signed-count" id="signed-count">已有 <strong>0</strong> 人签署法治承诺书</p>');
+                $('.commitment-form h2').after('<p class="signed-count" id="signed-count">已有 <strong>' + count + '</strong> 人签署法治承诺书</p>');
+            } else {
+                $('#signed-count').html('已有 <strong>' + count + '</strong> 人签署法治承诺书');
             }
-            
-            $.ajax({
-                url: `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/issues`,
-                headers: {
-                    'Authorization': `token ${GITHUB_TOKEN}`,
-                    'Accept': 'application/vnd.github.v3+json'
-                },
-                success: function(data) {
-                    var count = data.length;
-                    $('#signed-count').html('已有 <strong>' + count + '</strong> 人签署法治承诺书');
-                },
-                error: function(xhr, status, error) {
-                    console.error('加载已签署人数失败:', error);
-                    // 错误时显示默认值
-                    $('#signed-count').html('已有 <strong>0</strong> 人签署法治承诺书');
-                }
-            });
         }
         
-        // 创建GitHub Issue
-        function createGitHubIssue(name, school, grade, className, contact) {
-            var issueTitle = `签署承诺书 - ${name} - ${school} ${grade}年级${className}班`;
-            var issueBody = `
-                姓名：${name}
-                学校：${school}
-                年级：${grade}
-                班级：${className}
-                联系方式：${contact || '未提供'}
-                签署日期：${new Date().toLocaleDateString()}
-                
-                承诺内容：
-                1. 自觉遵守法律法规，做守法好公民；
-                2. 积极学习法律知识，增强法治意识；
-                3. 尊重他人权利，不参与校园欺凌；
-                4. 防范电信诈骗，保护个人信息；
-                5. 主动宣传法律知识，带动家人朋友学法守法；
-                6. 遇到法律问题，通过合法途径解决。
-            `;
+        // 保存签署信息
+        function saveCommitment(name, school, grade, className, contact) {
+            // 增加签署人数
+            var count = localStorage.getItem('signedCount') || 0;
+            count = parseInt(count) + 1;
+            localStorage.setItem('signedCount', count);
             
-            $.ajax({
-                url: `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/issues`,
-                method: 'POST',
-                headers: {
-                    'Authorization': `token ${GITHUB_TOKEN}`,
-                    'Accept': 'application/vnd.github.v3+json'
-                },
-                data: JSON.stringify({
-                    title: issueTitle,
-                    body: issueBody
-                }),
-                success: function() {
-                    // 更新已签署人数
-                    loadSignedCount();
-                },
-                error: function() {
-                    console.error('创建Issue失败');
-                }
+            // 保存签署信息（可选，用于本地记录）
+            var commitments = JSON.parse(localStorage.getItem('commitments') || '[]');
+            commitments.push({
+                name: name,
+                school: school,
+                grade: grade,
+                className: className,
+                contact: contact,
+                date: new Date().toLocaleDateString()
             });
+            // 只保存最近100条记录，避免存储过大
+            if (commitments.length > 100) {
+                commitments = commitments.slice(-100);
+            }
+            localStorage.setItem('commitments', JSON.stringify(commitments));
+            
+            // 更新已签署人数
+            loadSignedCount();
         }
     </script>
 </body>
