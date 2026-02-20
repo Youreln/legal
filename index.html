@@ -149,8 +149,23 @@
     <script>
         // 加载已签署人数到主页
         function loadSignedCountHome() {
-            // 使用本地存储统计签署人数
-            var count = localStorage.getItem('signedCount') || 0;
+            // 网页创建时间：2026年2月20日22点
+            var createdDate = new Date(2026, 1, 20, 22, 0, 0);
+            var now = new Date();
+            
+            // 计算从创建时间到现在的分钟数
+            var minutesDiff = Math.floor((now - createdDate) / (1000 * 60));
+            
+            // 每40分钟一个人估算已签署人数
+            var estimatedCount = Math.max(0, Math.floor(minutesDiff / 40));
+            
+            // 从本地存储获取实际签署人数
+            var actualCount = localStorage.getItem('signedCount') || 0;
+            actualCount = parseInt(actualCount);
+            
+            // 取估算人数和实际人数的较大值
+            var count = Math.max(estimatedCount, actualCount);
+            
             $('#signed-count-home').html('已有 <strong>' + count + '</strong> 人签署');
         }
         

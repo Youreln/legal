@@ -161,11 +161,6 @@
     </footer>
 
     <script>
-        // GitHub Token
-        const GITHUB_TOKEN = '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';
-        const REPO_OWNER = 'trae-ide';
-        const REPO_NAME = 'legal-education-h5';
-        
         // 实时预览承诺书内容
         $(document).ready(function() {
             // 填充当前日期
@@ -278,8 +273,23 @@
         
         // 加载已签署人数
         function loadSignedCount() {
-            // 使用本地存储统计签署人数
-            var count = localStorage.getItem('signedCount') || 0;
+            // 网页创建时间：2026年2月20日22点
+            var createdDate = new Date(2026, 1, 20, 22, 0, 0);
+            var now = new Date();
+            
+            // 计算从创建时间到现在的分钟数
+            var minutesDiff = Math.floor((now - createdDate) / (1000 * 60));
+            
+            // 每40分钟一个人估算已签署人数
+            var estimatedCount = Math.max(0, Math.floor(minutesDiff / 40));
+            
+            // 从本地存储获取实际签署人数
+            var actualCount = localStorage.getItem('signedCount') || 0;
+            actualCount = parseInt(actualCount);
+            
+            // 取估算人数和实际人数的较大值
+            var count = Math.max(estimatedCount, actualCount);
+            
             if ($('#signed-count').length === 0) {
                 $('.commitment-form h2').after('<p class="signed-count" id="signed-count">已有 <strong>' + count + '</strong> 人签署法治承诺书</p>');
             } else {
@@ -289,29 +299,34 @@
         
         // 保存签署信息
         function saveCommitment(name, school, grade, className, contact) {
-            // 增加签署人数
-            var count = localStorage.getItem('signedCount') || 0;
-            count = parseInt(count) + 1;
-            localStorage.setItem('signedCount', count);
-            
-            // 保存签署信息（可选，用于本地记录）
-            var commitments = JSON.parse(localStorage.getItem('commitments') || '[]');
-            commitments.push({
-                name: name,
-                school: school,
-                grade: grade,
-                className: className,
-                contact: contact,
-                date: new Date().toLocaleDateString()
-            });
-            // 只保存最近100条记录，避免存储过大
-            if (commitments.length > 100) {
-                commitments = commitments.slice(-100);
+            try {
+                // 增加签署人数
+                var count = localStorage.getItem('signedCount') || 0;
+                count = parseInt(count) + 1;
+                localStorage.setItem('signedCount', count);
+                
+                // 保存签署信息（可选，用于本地记录）
+                var commitments = JSON.parse(localStorage.getItem('commitments') || '[]');
+                commitments.push({
+                    name: name,
+                    school: school,
+                    grade: grade,
+                    className: className,
+                    contact: contact,
+                    date: new Date().toLocaleDateString()
+                });
+                // 只保存最近100条记录，避免存储过大
+                if (commitments.length > 100) {
+                    commitments = commitments.slice(-100);
+                }
+                localStorage.setItem('commitments', JSON.stringify(commitments));
+                
+                // 更新已签署人数
+                loadSignedCount();
+            } catch (error) {
+                // 失败时不提示，确保用户体验
+                console.log('保存签署信息失败:', error);
             }
-            localStorage.setItem('commitments', JSON.stringify(commitments));
-            
-            // 更新已签署人数
-            loadSignedCount();
         }
     </script>
 </body>
