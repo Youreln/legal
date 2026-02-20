@@ -278,6 +278,11 @@
         
         // 加载已签署人数
         function loadSignedCount() {
+            // 先显示默认值，避免用户等待
+            if ($('#signed-count').length === 0) {
+                $('.commitment-form h2').after('<p class="signed-count" id="signed-count">已有 <strong>0</strong> 人签署法治承诺书</p>');
+            }
+            
             $.ajax({
                 url: `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/issues`,
                 headers: {
@@ -286,14 +291,12 @@
                 },
                 success: function(data) {
                     var count = data.length;
-                    if ($('#signed-count').length === 0) {
-                        $('.commitment-form h2').after('<p class="signed-count" id="signed-count">已有 <strong>' + count + '</strong> 人签署法治承诺书</p>');
-                    } else {
-                        $('#signed-count').html('已有 <strong>' + count + '</strong> 人签署法治承诺书');
-                    }
+                    $('#signed-count').html('已有 <strong>' + count + '</strong> 人签署法治承诺书');
                 },
-                error: function() {
-                    console.error('加载已签署人数失败');
+                error: function(xhr, status, error) {
+                    console.error('加载已签署人数失败:', error);
+                    // 错误时显示默认值
+                    $('#signed-count').html('已有 <strong>0</strong> 人签署法治承诺书');
                 }
             });
         }

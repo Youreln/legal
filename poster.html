@@ -183,6 +183,9 @@
             $('#download-btn').click(function(e) {
                 e.preventDefault();
                 
+                // 显示下载中提示
+                alert('正在生成小纸条，请稍候...');
+                
                 // 使用html2canvas将小纸条转换为图片
                 html2canvas($('.poster-template')[0], {
                     scale: 2,
@@ -195,7 +198,7 @@
                     link.download = '法治小纸条_' + new Date().getTime() + '.png';
                     link.href = canvas.toDataURL('image/png');
                     link.click();
-                    alert('小纸条下载成功！');
+                    alert('小纸条下载成功！快去分享给你的朋友吧！');
                 }).catch(function(error) {
                     console.error('下载小纸条失败:', error);
                     alert('下载小纸条失败，请稍后重试或截图保存。');

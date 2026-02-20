@@ -127,23 +127,53 @@
                     <i class="fas fa-handshake"></i>
                     <h3>法治承诺书</h3>
                     <p>签署个人法治承诺书</p>
+                    <div class="signed-count-home" id="signed-count-home">已有 <strong>0</strong> 人签署</div>
                     <a href="commitment.html">签署承诺</a>
                 </div>
                 <div class="interactive-card">
                     <i class="fas fa-image"></i>
-                    <h3>海报生成</h3>
-                    <p>一键生成法治宣传海报</p>
-                    <a href="poster.html">生成海报</a>
+                    <h3>小纸条生成</h3>
+                    <p>一键生成法治宣传小纸条</p>
+                    <a href="poster.html">生成小纸条</a>
                 </div>
                 <div class="interactive-card">
                     <i class="fas fa-newspaper"></i>
                     <h3>活动报道</h3>
-                    <p>查看我们的活动美篇</p>
+                    <p>查看我们的活动报道</p>
                     <a href="news.html">查看报道</a>
                 </div>
             </div>
         </div>
     </section>
+
+    <script>
+        // 加载已签署人数到主页
+        function loadSignedCountHome() {
+            var GITHUB_TOKEN = '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';
+            var REPO_OWNER = 'trae-ide';
+            var REPO_NAME = 'legal-education-h5';
+            
+            $.ajax({
+                url: `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/issues`,
+                headers: {
+                    'Authorization': `token ${GITHUB_TOKEN}`,
+                    'Accept': 'application/vnd.github.v3+json'
+                },
+                success: function(data) {
+                    var count = data.length;
+                    $('#signed-count-home').html('已有 <strong>' + count + '</strong> 人签署');
+                },
+                error: function() {
+                    console.error('加载已签署人数失败');
+                }
+            });
+        }
+        
+        // 页面加载时执行
+        $(document).ready(function() {
+            loadSignedCountHome();
+        });
+    </script>
 
     <!-- 页脚 -->
     <footer class="footer">
