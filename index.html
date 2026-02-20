@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>法治为我护航，做自己的守护者 - 大田一中带法回家活动</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="js/script.js"></script>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="logo">
+            <h1>带法回家</h1>
+            <p>第26年 · 法治护航</p>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html" class="active">首页</a></li>
+            <li><a href="legal-knowledge.html">法律知识</a></li>
+            <li><a href="interactive.html">互动游戏</a></li>
+            <li><a href="commitment.html">承诺书</a></li>
+            <li><a href="poster.html">海报生成</a></li>
+            <li><a href="news.html">活动报道</a></li>
+        </ul>
+        <div class="menu-toggle">
+            <i class="fas fa-bars"></i>
+        </div>
+    </nav>
+
+    <!-- 英雄区域 -->
+    <section class="hero">
+        <div class="hero-content">
+            <h2>法治为我护航</h2>
+            <h3>做自己的守护者</h3>
+            <p>大田一中「带法回家」第26年</p>
+            <button class="btn-primary" onclick="scrollToSection('about')">了解更多</button>
+            <button class="btn-secondary" onclick="window.location.href='legal-knowledge.html'">开始学法</button>
+        </div>
+        <div class="hero-animation">
+            <div class="floating-icon">
+                <i class="fas fa-balance-scale"></i>
+            </div>
+            <div class="floating-icon">
+                <i class="fas fa-book"></i>
+            </div>
+            <div class="floating-icon">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- 活动介绍 -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title">活动介绍</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>今年，大田一中「带法回家」普法实践活动迎来了第26个年头。作为新时代的一中学子，我们踏上普法宣传的征程，将法治种子播撒到家乡的每一个角落，用青春力量护航法治建设。</p>
+                    <p>我们深入学习了《中华人民共和国法治宣传教育法》《福建省未成年人保护条例》《家庭教育促进法》等多部与群众生活息息相关的法律法规，精心制作了宣传资料，开展了形式多样的普法活动。</p>
+                </div>
+                <div class="about-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">26</span>
+                        <span class="stat-label">年坚守</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">1000+</span>
+                        <span class="stat-label">普法人次</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">10+</span>
+                        <span class="stat-label">法律专题</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 法律知识概览 -->
+    <section class="legal-overview">
+        <div class="container">
+            <h2 class="section-title">法律知识概览</h2>
+            <div class="legal-cards">
+                <div class="legal-card">
+                    <i class="fas fa-child"></i>
+                    <h3>未成年人保护</h3>
+                    <p>了解《福建省未成年人保护条例》和六大保护体系</p>
+                    <a href="legal-knowledge.html#minor-protection">查看详情</a>
+                </div>
+                <div class="legal-card">
+                    <i class="fas fa-home"></i>
+                    <h3>家庭教育促进法</h3>
+                    <p>学习家庭主体责任和科学教育方法</p>
+                    <a href="legal-knowledge.html#family-education">查看详情</a>
+                </div>
+                <div class="legal-card">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>防范电信诈骗</h3>
+                    <p>识别手机口业务等诈骗手段</p>
+                    <a href="legal-knowledge.html#anti-fraud">查看详情</a>
+                </div>
+                <div class="legal-card">
+                    <i class="fas fa-file-alt"></i>
+                    <h3>法治宣传教育法</h3>
+                    <p>了解国家法治宣传教育制度</p>
+                    <a href="legal-knowledge.html#legal-education">查看详情</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 互动功能预览 -->
+    <section class="interactive-preview">
+        <div class="container">
+            <h2 class="section-title">互动功能</h2>
+            <div class="interactive-cards">
+                <div class="interactive-card">
+                    <i class="fas fa-gamepad"></i>
+                    <h3>法治小游戏</h3>
+                    <p>通过游戏学习法律知识</p>
+                    <a href="interactive.html">开始游戏</a>
+                </div>
+                <div class="interactive-card">
+                    <i class="fas fa-handshake"></i>
+                    <h3>法治承诺书</h3>
+                    <p>签署个人法治承诺书</p>
+                    <a href="commitment.html">签署承诺</a>
+                </div>
+                <div class="interactive-card">
+                    <i class="fas fa-image"></i>
+                    <h3>海报生成</h3>
+                    <p>一键生成法治宣传海报</p>
+                    <a href="poster.html">生成海报</a>
+                </div>
+                <div class="interactive-card">
+                    <i class="fas fa-newspaper"></i>
+                    <h3>活动报道</h3>
+                    <p>查看我们的活动美篇</p>
+                    <a href="news.html">查看报道</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <h3>大田一中「带法回家」活动</h3>
+                    <p>法治为我护航，做自己的守护者</p>
+                    <p>第26年 · 2026</p>
+                </div>
+                <div class="footer-links">
+                    <h4>快速链接</h4>
+                    <ul>
+                        <li><a href="index.html">首页</a></li>
+                        <li><a href="legal-knowledge.html">法律知识</a></li>
+                        <li><a href="interactive.html">互动游戏</a></li>
+                        <li><a href="commitment.html">承诺书</a></li>
+                        <li><a href="poster.html">海报生成</a></li>
+                        <li><a href="news.html">活动报道</a></li>
+                    </ul>
+                </div>
+                <div class="footer-share">
+                    <h4>分享</h4>
+                    <div class="share-buttons">
+                        <button class="share-btn" onclick="shareToWeChat()">
+                            <i class="fab fa-weixin"></i>
+                        </button>
+                        <button class="share-btn" onclick="shareToWeibo()">
+                            <i class="fab fa-weibo"></i>
+                        </button>
+                        <button class="share-btn" onclick="shareToQQ()">
+                            <i class="fab fa-qq"></i>
+                        </button>
+                        <button class="share-btn" onclick="copyLink()">
+                            <i class="fas fa-link"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 大田一中「带法回家」活动. 保留所有权利.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 分享弹窗 -->
+    <div class="share-modal" id="shareModal">
+        <div class="share-modal-content">
+            <h3>分享到</h3>
+            <div class="share-options">
+                <button class="share-option" onclick="shareToWeChat()">
+                    <i class="fab fa-weixin"></i>
+                    <span>微信</span>
+                </button>
+                <button class="share-option" onclick="shareToWeibo()">
+                    <i class="fab fa-weibo"></i>
+                    <span>微博</span>
+                </button>
+                <button class="share-option" onclick="shareToQQ()">
+                    <i class="fab fa-qq"></i>
+                    <span>QQ</span>
+                </button>
+                <button class="share-option" onclick="copyLink()">
+                    <i class="fas fa-link"></i>
+                    <span>复制链接</span>
+                </button>
+            </div>
+            <button class="close-modal" onclick="closeShareModal()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+</body>
+</html>
