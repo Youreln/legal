@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>大田一中第三十四届校园科技文化艺术体育劳动节摄影大赛</title>
+  <!-- 引入Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- 引入Font Awesome图标 -->
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <!-- Tailwind自定义配置 -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#2E7D32', // 主色调深绿
+            secondary: '#81C784', // 辅助色淡绿
+            light: '#E8F5E9', // 超浅绿背景
+            dark: '#1B5E20', // 深绿强调色
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      }
+    }
+  </script>
+  <!-- 自定义样式与动画 -->
+  <style type="text/tailwindcss">
+    @layer utilities {
+      /* 核心动效工具类 */
+      .text-gradient {
+        background: linear-gradient(90deg, #2E7D32, #81C784, #2E7D32);
+        background-size: 200% auto;
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .text-shine {
+        animation: shine 3s linear infinite;
+      }
+      .btn-breathe {
+        animation: breathe 2s ease-in-out infinite;
+      }
+      .scroll-animate {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.6s ease-out;
+      }
+      .scroll-animate.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .parallax {
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+      .card-hover {
+        transition: all 0.3s ease;
+      }
+      .card-hover:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 25px -5px rgba(46, 125, 50, 0.1), 0 10px 10px -5px rgba(46, 125, 50, 0.04);
+      }
+      .nav-scrolled {
+        @apply bg-white/90 backdrop-blur-md shadow-md;
+      }
+    }
+    /* 动画定义 */
+    @keyframes shine {
+      to {
+        background-position: 200% center;
+      }
+    }
+    @keyframes breathe {
+      0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 15px rgba(46, 125, 50, 0.4);
+      }
+      50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 25px rgba(46, 125, 50, 0.6);
+      }
+    }
+  </style>
+</head>
+<body class="bg-white font-sans text-gray-800 overflow-x-hidden">
+  <!-- 导航栏 - 滚动固定+透明度变化 -->
+  <nav id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300 py-4 px-6 md:px-12">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <a href="#" class="text-primary font-bold text-xl md:text-2xl flex items-center gap-2">
+        <i class="fa fa-camera-retro"></i>
+        <span>大田一中摄影大赛</span>
+      </a>
+      <!-- 桌面端导航 -->
+      <div class="hidden md:flex items-center gap-8">
+        <a href="#intro" class="font-medium hover:text-primary transition-colors">大赛介绍</a>
+        <a href="#rules" class="font-medium hover:text-primary transition-colors">参赛规则</a>
+        <a href="#category" class="font-medium hover:text-primary transition-colors">作品类别</a>
+        <a href="#faq" class="font-medium hover:text-primary transition-colors">常见问题</a>
+        <a href="#contact" class="font-medium hover:text-primary transition-colors">联系方式</a>
+        <a href="#submit" class="bg-primary text-white px-5 py-2 rounded-full font-medium hover:bg-dark transition-all hover:scale-105">
+          立即参赛
+        </a>
+      </div>
+      <!-- 移动端菜单按钮 -->
+      <button id="menuBtn" class="md:hidden text-primary text-2xl">
+        <i class="fa fa-bars"></i>
+      </button>
+    </div>
+    <!-- 移动端下拉菜单 -->
+    <div id="mobileMenu" class="md:hidden hidden bg-white/95 backdrop-blur-md absolute top-full left-0 w-full shadow-lg rounded-b-lg">
+      <div class="flex flex-col gap-4 p-6">
+        <a href="#intro" class="font-medium hover:text-primary transition-colors py-2">大赛介绍</a>
+        <a href="#rules" class="font-medium hover:text-primary transition-colors py-2">参赛规则</a>
+        <a href="#category" class="font-medium hover:text-primary transition-colors py-2">作品类别</a>
+        <a href="#faq" class="font-medium hover:text-primary transition-colors py-2">常见问题</a>
+        <a href="#contact" class="font-medium hover:text-primary transition-colors py-2">联系方式</a>
+        <a href="#submit" class="bg-primary text-white px-5 py-3 rounded-full font-medium text-center">
+          立即参赛
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 单张海报展示（无轮播，不变形） -->
+  <section class="relative w-full h-screen min-h-[600px] overflow-hidden flex items-center justify-center">
+    <img src="https://pic1.imgdb.cn/item/69cfb68bdf10edaed90fc226.png" 
+         alt="大赛海报" 
+         class="w-full h-full object-contain bg-black">
+    <div class="absolute inset-0 bg-black/30 z-10"></div>
+    <div class="absolute inset-0 z-20 flex flex-col justify-center items-center text-center px-6">
+      <h1 class="text-gradient text-shine text-3xl md:text-5xl lg:text-7xl font-bold mb-6 max-w-5xl leading-tight">
+        大田一中第三十四届校园科技文化艺术体育劳动节摄影大赛
+      </h1>
+      <p class="text-white text-lg md:text-xl mb-10 max-w-3xl drop-shadow-md">
+        镜头里的生活，藏着最动人的青春
+      </p>
+      <a href="#submit" class="btn-breathe bg-primary hover:bg-dark text-white text-lg md:text-xl font-bold px-10 py-4 rounded-full transition-all shadow-lg">
+        我要参赛 立即投稿
+      </a>
+    </div>
+  </section>
+
+  <!-- 活动介绍 -->
+  <section id="intro" class="py-20 px-6 md:px-12 bg-light">
+    <div class="max-w-7xl mx-auto">
+      <h2 class="text-gradient text-shine text-3xl md:text-4xl font-bold text-center mb-16 scroll-animate">大赛介绍</h2>
+      <div class="bg-white rounded-2xl shadow-lg p-8 md:p-12 scroll-animate card-hover">
+        <p class="text-lg md:text-xl leading-relaxed mb-6">
+          本次大田一中东部校区第三十四届校园科技文化艺术体育劳动节摄影大赛，正式面向高一、高二全体同学征稿！我们邀请你用镜头捕捉青春瞬间，用光影讲述独家故事。
+        </p>
+        <p class="text-lg md:text-xl leading-relaxed">
+          你可以定格校园里的晨光晚霞、运动赛场的热血拼搏、劳动实践的成长瞬间，也可以记录家乡大田的青山绿水、古厝烟火、特色风物，让每一张照片，都成为青春最鲜活的注脚。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 参赛规则 -->
+  <section id="rules" class="py-20 px-6 md:px-12 bg-white">
+    <div class="max-w-7xl mx-auto">
+      <h2 class="text-gradient text-shine text-3xl md:text-4xl font-bold text-center mb-16 scroll-animate">参赛规则</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="bg-light rounded-2xl p-8 shadow-md card-hover scroll-animate">
+          <div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center text-primary text-2xl mb-6">
+            <i class="fa fa-check-circle"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-4 text-primary">作品要求</h3>
+          <ul class="space-y-3 text-gray-700">
+            <li class="flex items-start gap-3">
+              <i class="fa fa-angle-right text-primary mt-1"></i>
+              <span>参赛作品必须为原创，严禁抄袭、盗用他人作品</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <i class="fa fa-angle-right text-primary mt-1"></i>
+              <span>作品至少包含1张大田一中东部校区校园风景照</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <i class="fa fa-angle-right text-primary mt-1"></i>
+              <span>其余作品可围绕大田家乡风光、人文风貌创作</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <i class="fa fa-angle-right text-primary mt-1"></i>
+              <span>图片清晰，主题积极向上，传递青春正能量</span>
+            </li>
+          </ul>
+        </div>
+        <div class="bg-light rounded-2xl p-8 shadow-md card-hover scroll-animate">
+          <div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center text-primary text-2xl mb-6">
+            <i class="fa fa-exclamation-triangle"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-4 text-primary">版权须知</h3>
+          <ul class="space-y-3 text-gray-700">
+            <li class="flex items-start gap-3">
+              <i class="fa fa-angle-right text-primary mt-1"></i>
+              <span>严格遵守《中华人民共和国民法典》肖像权相关规定</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <i class="fa fa-angle-right text-primary mt-1"></i>
+              <span>禁止上传包含他人清晰可辨认肖像的作品</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <i class="fa fa-angle-right text-primary mt-1"></i>
+              <span>若因违规上传引发肖像权纠纷，由投稿人自行承担全部法律责任</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <i class="fa fa-angle-right text-primary mt-1"></i>
+              <span>主办方拥有参赛作品的非商业性宣传使用权</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 作品类别 -->
+  <section id="category" class="py-20 px-6 md:px-12 bg-light parallax" style="background-image: url('https://picsum.photos/id/1048/1920/1080');">
+    <div class="max-w-7xl mx-auto">
+      <h2 class="text-gradient text-shine text-3xl md:text-4xl font-bold text-center mb-16 scroll-animate text-white drop-shadow-md">作品主题类别</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="bg-white/90 backdrop-blur-md rounded-2xl p-8 shadow-lg card-hover scroll-animate">
+          <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white text-xl mb-5">
+            <i class="fa fa-microchip"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">科技主题</h3>
+          <p class="text-gray-700">捕捉校园科技活动、创新实践、智慧校园场景，用镜头记录科技之美。</p>
+        </div>
+        <div class="bg-white/90 backdrop-blur-md rounded-2xl p-8 shadow-lg card-hover scroll-animate">
+          <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white text-xl mb-5">
+            <i class="fa fa-book"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">文化主题</h3>
+          <p class="text-gray-700">定格校园文化活动、家乡人文底蕴、传统民俗风貌，传承文化基因。</p>
+        </div>
+        <div class="bg-white/90 backdrop-blur-md rounded-2xl p-8 shadow-lg card-hover scroll-animate">
+          <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white text-xl mb-5">
+            <i class="fa fa-paint-brush"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">艺术主题</h3>
+          <p class="text-gray-700">记录校园艺术瞬间、光影美学、创意构图，用镜头诠释青春艺术气息。</p>
+        </div>
+        <div class="bg-white/90 backdrop-blur-md rounded-2xl p-8 shadow-lg card-hover scroll-animate">
+          <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white text-xl mb-5">
+            <i class="fa fa-trophy"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">体育主题</h3>
+          <p class="text-gray-700">捕捉运动赛场的热血拼搏、青春活力，定格挥洒汗水的精彩瞬间。</p>
+        </div>
+        <div class="bg-white/90 backdrop-blur-md rounded-2xl p-8 shadow-lg card-hover scroll-animate">
+          <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white text-xl mb-5">
+            <i class="fa fa-handshake-o"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">劳动主题</h3>
+          <p class="text-gray-700">记录劳动实践的成长瞬间、校园劳动场景，致敬每一份辛勤付出。</p>
+        </div>
+        <div class="bg-white/90 backdrop-blur-md rounded-2xl p-8 shadow-lg card-hover scroll-animate">
+          <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white text-xl mb-5">
+            <i class="fa fa-map-marker"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">家乡风光</h3>
+          <p class="text-gray-700">定格大田的青山绿水、古厝烟火、特色风物，记录家乡的美好风光。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 投稿入口核心模块 -->
+  <section id="submit" class="py-20 px-6 md:px-12 bg-white">
+    <div class="max-w-7xl mx-auto text-center">
+      <h2 class="text-gradient text-shine text-3xl md:text-4xl font-bold mb-6 scroll-animate">一键投稿</h2>
+      <p class="text-lg text-gray-600 mb-12 max-w-2xl mx-auto scroll-animate">
+        点击下方按钮，即可提交你的摄影作品，用镜头讲述你的青春故事
+      </p>
+      
+      <!-- 改为跳转腾讯文档，不内嵌 -->
+      <a id="submitBtn" 
+         href="https://docs.qq.com/form/page/DSEtGaVJocW5CS2pN" 
+         target="_blank" 
+         class="btn-breathe bg-primary hover:bg-dark text-white text-xl md:text-2xl font-bold px-16 py-5 rounded-full shadow-xl transition-all mb-16 scroll-animate inline-block">
+        <i class="fa fa-upload mr-3"></i>立即投稿 参与大赛
+      </a>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto">
+        <div class="bg-light rounded-xl p-6 card-hover scroll-animate">
+          <p class="text-3xl font-bold text-primary mb-2">≤5张</p>
+          <p class="text-gray-600">单组作品数量</p>
+        </div>
+        <div class="bg-light rounded-xl p-6 card-hover scroll-animate">
+          <p class="text-3xl font-bold text-primary mb-2">≥1张</p>
+          <p class="text-gray-600">校园风景作品</p>
+        </div>
+        <div class="bg-light rounded-xl p-6 card-hover scroll-animate">
+          <p class="text-3xl font-bold text-primary mb-2">原创</p>
+          <p class="text-gray-600">作品版权要求</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 常见问题FAQ -->
+  <section id="faq" class="py-20 px-6 md:px-12 bg-light">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-gradient text-shine text-3xl md:text-4xl font-bold text-center mb-16 scroll-animate">常见问题</h2>
+      <div class="space-y-4">
+        <div class="faq-item scroll-animate">
+          <button class="faq-header w-full bg-white rounded-xl p-6 flex justify-between items-center shadow-md hover:shadow-lg transition-all">
+            <span class="text-lg font-bold text-left">如何投稿参赛？</span>
+            <i class="fa fa-chevron-down text-primary transition-transform duration-300"></i>
+          </button>
+          <div class="faq-content bg-white rounded-b-xl px-6 pb-6 hidden">
+            <p class="text-gray-700 leading-relaxed">
+              点击页面中的「立即投稿」按钮，在打开的腾讯文档表单中填写信息并提交即可。
+            </p>
+          </div>
+        </div>
+        <div class="faq-item scroll-animate">
+          <button class="faq-header w-full bg-white rounded-xl p-6 flex justify-between items-center shadow-md hover:shadow-lg transition-all">
+            <span class="text-lg font-bold text-left">能否提交组图作品？</span>
+            <i class="fa fa-chevron-down text-primary transition-transform duration-300"></i>
+          </button>
+          <div class="faq-content bg-white rounded-b-xl px-6 pb-6 hidden">
+            <p class="text-gray-700 leading-relaxed">
+              可以提交组图，单份投稿最多可上传5张作品，其中至少包含1张大田一中东部校区校园风景照，其余作品可自由创作。
+            </p>
+          </div>
+        </div>
+        <div class="faq-item scroll-animate">
+          <button class="faq-header w-full bg-white rounded-xl p-6 flex justify-between items-center shadow-md hover:shadow-lg transition-all">
+            <span class="text-lg font-bold text-left">作品投稿截止时间是什么时候？</span>
+            <i class="fa fa-chevron-down text-primary transition-transform duration-300"></i>
+          </button>
+          <div class="faq-content bg-white rounded-b-xl px-6 pb-6 hidden">
+            <p class="text-gray-700 leading-relaxed">
+              本次大赛投稿截止时间请关注参赛QQ群内的官方通知，后续赛程安排、获奖公示等信息也将在群内同步。
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 联系方式 -->
+  <section id="contact" class="py-20 px-6 md:px-12 bg-white">
+    <div class="max-w-7xl mx-auto">
+      <h2 class="text-gradient text-shine text-3xl md:text-4xl font-bold text-center mb-16 scroll-animate">联系方式</h2>
+      <div class="max-w-3xl mx-auto bg-light rounded-2xl shadow-lg p-8 md:p-12 scroll-animate">
+        <div class="text-center mb-10">
+          <h3 class="text-2xl font-bold text-primary mb-4">参赛交流QQ群</h3>
+          <p class="text-gray-600 mb-6">投稿完成后请加入官方交流群，后续赛事通知、获奖信息将在群内第一时间发布</p>
+          <div class="flex flex-col md:flex-row items-center justify-center gap-8">
+            <div class="bg-white p-4 rounded-xl shadow-md">
+              <img src="https://i.imgs.ovh/2026/04/03/ZD1i9X.png" alt="参赛QQ群二维码" class="w-48 h-48 object-cover">
+            </div>
+            <div class="flex flex-col gap-4">
+              <p class="font-medium">群号：1093585565</p>
+              <a href="https://qm.qq.com/q/r2nYjvjbyw" target="_blank" class="bg-[#12B7F5] hover:bg-[#0099DD] text-white font-bold px-8 py-3 rounded-full transition-all hover:scale-105 shadow-md">
+                <i class="fa fa-qq mr-2"></i>一键加群
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <footer class="bg-primary text-white py-10 px-6 md:px-12">
+    <div class="max-w-7xl mx-auto text-center">
+      <p class="text-lg mb-4">© 大田一中东部校区・校园摄影大赛</p>
+      <p class="text-white/70 text-sm">镜头里的生活，藏着最动人的青春</p>
+    </div>
+  </footer>
+
+  <!-- 投稿成功返回后弹出加群提示 -->
+  <div id="successModal" class="fixed inset-0 bg-black/70 z-[70] hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl w-full max-w-lg p-8 text-center">
+      <div class="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center text-primary text-4xl mx-auto mb-6">
+        <i class="fa fa-check-circle"></i>
+      </div>
+      <h3 class="text-2xl font-bold mb-4">投稿成功！</h3>
+      <p class="text-gray-600 mb-8">检测到你已完成投稿，请加入官方参赛群</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="https://qm.qq.com/q/r2nYjvjbyw" target="_blank" class="bg-[#12B7F5] hover:bg-[#0099DD] text-white font-bold px-6 py-3 rounded-full transition-all">
+          <i class="fa fa-qq mr-2"></i>立即加群
+        </a>
+        <button id="closeSuccess" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold px-6 py-3 rounded-full transition-all">
+          关闭
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 导航栏滚动效果
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) navbar.classList.add('nav-scrolled');
+      else navbar.classList.remove('nav-scrolled');
+    });
+
+    // 移动端菜单
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+      menuBtn.innerHTML = mobileMenu.classList.contains('hidden') ? '<i class="fa fa-bars"></i>' : '<i class="fa fa-times"></i>';
+    });
+    document.querySelectorAll('#mobileMenu a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+        menuBtn.innerHTML = '<i class="fa fa-bars"></i>';
+      });
+    });
+
+    // 滚动动画
+    const scrollAnimateElements = document.querySelectorAll('.scroll-animate');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => entry.isIntersecting && entry.target.classList.add('active'));
+    }, { threshold: 0.1 });
+    scrollAnimateElements.forEach(el => observer.observe(el));
+
+    // FAQ手风琴
+    const faqHeaders = document.querySelectorAll('.faq-header');
+    faqHeaders.forEach(header => {
+      header.addEventListener('click', () => {
+        const content = header.nextElementSibling;
+        const icon = header.querySelector('i');
+        document.querySelectorAll('.faq-content').forEach(item => {
+          if (item !== content) {
+            item.classList.add('hidden');
+            item.previousElementSibling.querySelector('i').style.transform = 'rotate(0deg)';
+          }
+        });
+        content.classList.toggle('hidden');
+        icon.style.transform = content.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
+      });
+    });
+
+    // 核心逻辑：点击投稿按钮后标记，返回页面自动弹出加群
+    const submitBtn = document.getElementById('submitBtn');
+    const successModal = document.getElementById('successModal');
+    const closeSuccess = document.getElementById('closeSuccess');
+
+    submitBtn.addEventListener('click', () => {
+      localStorage.setItem('submitted', 'true');
+    });
+
+    // 返回网站后检测是否提交过
+    window.addEventListener('load', () => {
+      if (localStorage.getItem('submitted') === 'true') {
+        successModal.classList.remove('hidden');
+        localStorage.removeItem('submitted'); // 只弹一次
+      }
+    });
+
+    closeSuccess.addEventListener('click', () => {
+      successModal.classList.add('hidden');
+    });
+
+    // 平滑滚动
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
+      });
+    });
+  </script>
+</body>
+</html>
