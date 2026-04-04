@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>大田一中第三十四届校园科技文化艺术体育劳动节摄影大赛</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#2E7D32',
+            secondary: '#81C784',
+            light: '#E8F5E9',
+            dark: '#1B5E20',
+          },
+          fontFamily: {
+            sans: ['Inter','system-ui','sans-serif'],
+          },
+        },
+      }
+    }
+  </script>
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .text-gradient {
+        background: linear-gradient(90deg, #ffffff, #E8F5E9, #81C784, #ffffff);
+        background-size: 300% auto;
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .text-shine { animation: shine 2.5s linear infinite; }
+      .btn-breathe { animation: breathe 2s ease-in-out infinite; }
+      .pop-fade { animation: popfade 0.5s ease forwards; }
+      .scroll-animate { opacity:0; transform:translateY(30px); transition:all 0.6s ease-out; }
+      .scroll-animate.active { opacity:1; transform:translateY(0); }
+    }
+    @keyframes shine { to { background-position: -300% center; } }
+    @keyframes breathe {
+      0%,100%{transform:scale(1); box-shadow:0 0 15px rgba(46,125,50,0.4);}
+      50%{transform:scale(1.05); box-shadow:0 0 25px rgba(46,125,50,0.6);}
+    }
+    @keyframes popfade {
+      from{opacity:0; transform:scale(0.9);}
+      to{opacity:1; transform:scale(1);}
+    }
+  </style>
+</head>
+<body class="bg-white font-sans text-gray-800 overflow-x-hidden">
+
+<!-- 导航 -->
+<nav id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300 py-4 px-6 md:px-12">
+  <div class="max-w-7xl mx-auto flex justify-between items-center">
+    <a class="text-primary font-bold text-xl md:text-2xl flex items-center gap-2">
+      <i class="fa fa-camera-retro"></i><span>大田一中摄影大赛</span>
+    </a>
+    <button id="menuBtn" class="md:hidden text-primary text-2xl">
+      <i class="fa fa-bars"></i>
+    </button>
+  </div>
+</nav>
+
+<!-- 首页Banner（文字超级突出） -->
+<section class="relative w-full h-screen min-h-[650px] overflow-hidden flex items-center justify-center text-center px-6" 
+style="background:url(https://pic1.imgdb.cn/item/69cfb68bdf10edaed90fc226.png) center/cover;">
+  <div class="absolute inset-0 bg-black/50 z-10"></div>
+  <div class="relative z-20 max-w-6xl mx-auto">
+    <h1 class="text-gradient text-shine text-4xl md:text-7xl font-black mb-6 drop-shadow-2xl leading-tight">
+      大田一中第三十四届校园科技文化艺术体育劳动节摄影大赛
+    </h1>
+    <p class="text-white text-xl md:text-3xl mb-10 font-medium drop-shadow-lg">
+      投稿进行中 · 提交后即可加入官方参赛群
+    </p>
+    <button onclick="openSubmit()" 
+      class="btn-breathe bg-primary text-white text-xl md:text-2xl font-bold px-10 py-5 rounded-full shadow-xl">
+      <i class="fa fa-upload mr-2"></i>立即投稿
+    </button>
+  </div>
+</section>
+
+<!-- 腾讯文档投稿（超大框，绝对好点） -->
+<div id="submitArea" class="hidden fixed inset-0 bg-black/80 z-50 p-4">
+  <div class="bg-white rounded-2xl w-full max-w-6xl max-h-[95vh] relative">
+    <button onclick="closeSubmit()" class="absolute -top-5 right-0 text-white text-2xl z-10">✕</button>
+    <iframe 
+      src="https://docs.qq.com/form/page/DSEtGaVJocW5CS2pN" 
+      width="100%" height="900" 
+      frameborder="0"
+      id="formFrame"
+      class="w-full rounded-2xl"></iframe>
+  </div>
+</div>
+
+<!-- 投稿成功后弹出：加群弹窗 -->
+<div id="groupModal" class="hidden fixed inset-0 bg-black/70 z-60 items-center justify-center p-4">
+  <div class="bg-white rounded-2xl w-full max-w-md p-8 text-center pop-fade">
+    <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center text-primary text-3xl mx-auto mb-4">
+      <i class="fa fa-check-circle"></i>
+    </div>
+    <h3 class="text-2xl font-bold mb-2">投稿成功！</h3>
+    <p class="text-gray-600 mb-6">请扫码加入参赛群，接收赛事通知</p>
+    <img src="https://i.imgs.ovh/2026/04/03/ZD1i9X.png" alt="参赛群二维码" class="w-56 h-56 mx-auto rounded-xl border-4 border-primary">
+    <p class="mt-4 text-lg font-bold">群号：1093585565</p>
+    <button onclick="closeGroupModal()" class="mt-6 bg-primary text-white px-6 py-3 rounded-full w-full font-bold">
+      我知道了
+    </button>
+  </div>
+</div>
+
+<script>
+  // 打开投稿
+  function openSubmit(){
+    document.getElementById('submitArea').classList.remove('hidden');
+    document.body.style.overflow='hidden';
+  }
+  // 关闭投稿
+  function closeSubmit(){
+    document.getElementById('submitArea').classList.add('hidden');
+    document.body.style.overflow='auto';
+  }
+  // 关闭加群弹窗
+  function closeGroupModal(){
+    document.getElementById('groupModal').classList.add('hidden');
+  }
+
+  // 核心逻辑：腾讯文档提交成功 → 自动弹出加群二维码
+  const formFrame = document.getElementById('formFrame');
+  formFrame.addEventListener('load', function(){
+    setTimeout(()=>{
+      closeSubmit();
+      document.getElementById('groupModal').style.display='flex';
+    }, 2000);
+  });
+</script>
+
+</body>
+</html>
